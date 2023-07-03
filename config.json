@@ -1,6 +1,23 @@
-[
-	{"stopRef": "17879", "lineRef": "T", "directionRef": "N"},
-	{"stopRef": "15237", "lineRef": "N", "directionRef": "OB"},
-	{"stopRef": "13114", "lineRef": "30", "directionRef": "OB"},
-	{"stopRef": "13114", "lineRef": "45", "directionRef": "OB"}
-]
+{
+	"options": [
+		{"stopRef": "17879", "lineRef": "T", "directionRef": "N"},
+		{"stopRef": "15237", "lineRef": "N", "directionRef": "OB"},
+		{"stopRef": "13114", "lineRef": "30", "directionRef": "OB"},
+		{"stopRef": "13114", "lineRef": "45", "directionRef": "OB"}
+	],
+	"stopInfo": {
+		"13114": {
+			"stopName": "3rd St & Brannan St",
+			"walkingTime": 124.06
+		},
+		"17879": {
+			"stopName": "4th St & Brannan St",
+			"walkingTime": 174.28
+		},
+		"15237": {
+			"stopName": "King St & 2nd St",
+			"walkingTime": 262.67
+		}
+	},
+	"walkOptimizerBuffer": 90
+}

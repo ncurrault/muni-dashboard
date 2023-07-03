@@ -2,19 +2,34 @@ import json
 from collections import defaultdict
 from pprint import pprint
 import datetime
+import requests
 
-with open(
-    "../muni-dashboard2/all_10-06am.json",
-    "r",
-    encoding="utf-8-sig",
-) as f:
-    data = json.load(f)
+USE_TEST_DATA = False
 
 with open("config.json", "r") as f:
     config = json.load(f)
 
-with open("secrets.json", "r") as f:
-    API_KEY = json.load(f)["apiKey"]
+if USE_TEST_DATA:
+    with open(
+        "../muni-dashboard2/all_10-06am.json",
+        "r",
+        encoding="utf-8-sig",
+    ) as f:
+        data = json.load(f)
+else:
+    with open("secrets.json", "r") as f:
+        API_KEY = json.load(f)["apiKey"]
+    response = requests.get(
+        f"https://api.511.org/transit/StopMonitoring?api_key={API_KEY}&agency=SF&format=JSON"
+    )
+    # NOTE: 511 API supports filtering to a single `stop_code`, but we need
+    # info on 3 stops at once, and the API rate limits to once per minute.
+    # So here we request info on all stops in San Francisco (don't worry
+    # about it) and filter it down locally
+
+    if not response.ok:
+        raise ValueError("511 API error")
+    data = json.loads(response.content.decode(encoding="utf-8-sig"))
 
 # stopRef -> list of expected departure times
 upcoming_departures: defaultdict[str, set[str]] = defaultdict(set)
@@ -56,9 +71,12 @@ def is_departure_feasible(departure_timestamp: str, walking_time_secs: float):
     departure_datetime = datetime.datetime.strptime(
         departure_timestamp, "%Y-%m-%dT%H:%M:%SZ"
     )
-    station_arrival = datetime.datetime(2023, 6, 27, 17, 4, 17) + datetime.timedelta(
-        seconds=walking_time_secs
+    now = (
+        datetime.datetime(2023, 6, 27, 17, 4, 17)
+        if USE_TEST_DATA
+        else datetime.datetime.utcnow()
     )
+    station_arrival = now + datetime.timedelta(seconds=walking_time_secs)
 
     return station_arrival < departure_datetime
 

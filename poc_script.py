@@ -35,7 +35,6 @@ else:
 upcoming_departures: defaultdict[str, set[str]] = defaultdict(set)
 
 relevant_stops = set(stop["stopRef"] for stop in config["options"])
-stop_name_lookup = {}
 
 for departure in data["ServiceDelivery"]["StopMonitoringDelivery"][
     "MonitoredStopVisit"
@@ -43,11 +42,6 @@ for departure in data["ServiceDelivery"]["StopMonitoringDelivery"][
     stop_ref = departure["MonitoredVehicleJourney"]["MonitoredCall"]["StopPointRef"]
     if stop_ref not in relevant_stops:
         continue
-
-    if stop_ref not in stop_name_lookup:
-        stop_name_lookup[stop_ref] = departure["MonitoredVehicleJourney"][
-            "MonitoredCall"
-        ]["StopPointName"]
 
     # check if line and direction is acceptable
     for option in config["options"]:
@@ -102,7 +96,6 @@ for stop_ref in upcoming_departures_sorted.keys():
 
 result = {
     "config": config,
-    "stopNames": stop_name_lookup,
     "upcomingDepartures": upcoming_departures_sorted,
     "nextFeasibleDepartures": sorted(
         next_feasible_departures.items(), key=lambda item: item[1]

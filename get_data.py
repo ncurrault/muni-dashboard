@@ -5,6 +5,9 @@ import datetime
 import requests
 
 USE_TEST_DATA = True
+TEST_DATA_FILE = "../muni-dashboard2/all_10-06am.json"
+
+
 CONFIG_FILE = "config.json"
 SECRETS_FILE = "secrets.json"
 
@@ -16,11 +19,7 @@ def get_config():
 
 def get_muni_data():
     if USE_TEST_DATA:
-        with open(
-            "../muni-dashboard2/all_10-06am.json",
-            "r",
-            encoding="utf-8-sig",
-        ) as f:
+        with open(TEST_DATA_FILE, "r", encoding="utf-8-sig") as f:
             data = json.load(f)
     else:
         with open("secrets.json", "r") as f:

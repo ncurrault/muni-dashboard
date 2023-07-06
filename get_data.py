@@ -116,6 +116,7 @@ def get_result():
     return result
 
 
+# run this file directly to print the result
 def main():
     pprint(get_result())
 

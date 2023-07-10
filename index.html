@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>Muni Dashbaord</title>
+    <title>Muni Dashboard</title>
 
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"   integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="   crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,6 +19,30 @@
         .title img {
             height: 1.5em;
         }
+
+        .stop-icon {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 1em;
+            min-height: 20vh;
+        }
+        .stop-icon img {
+            width: 100%;
+        }
+        .bus-line {
+            background-color: rgb(211,107,124);
+            color: white;
+            font-weight: bold;
+            padding: 0.25em;
+            margin-right: 0.25em;
+            font-size: 2.5em;
+            border-radius: 10px;
+        }
+        
+        .time-display {
+            font-size: 4em;
+        }
     </style>
 </head>
 <body class="container">
@@ -29,10 +53,42 @@
         <h1><img src="static/muni.svg"></h1>
         <h1>Dashboard</h1>
     </div>
+    <div class="col-xs-12">
+        <p>Last updated: TODO</p>
+    </div>
+    <div class="col-xs-12">
+        <p>If departing now: 4th & King St, 0:00</p>
+    </div>
 </div>
 </div>
 
-<!-- TODO -->
+<div class="row">
+    <div class="col-xs-2 stop-icon">
+        <img src="static/metro_logos/T.svg" />
+    </div>
+    <div class="time-display col-xs-3 col-xs-offset-1">0:00</div>
+    <div class="time-display col-xs-3">0:00</div>
+    <div class="time-display col-xs-3">0:00</div>
+</div>
+
+<div class="row">
+    <div class="col-xs-2 stop-icon">
+        <img src="static/metro_logos/N.svg" />
+    </div>
+    <div class="time-display col-xs-3 col-xs-offset-1">0:00</div>
+    <div class="time-display col-xs-3">0:00</div>
+    <div class="time-display col-xs-3">0:00</div>
+</div>
+
+<div class="row">
+    <div class="col-xs-2 stop-icon">
+        <div class="bus-line">30</div>
+        <div class="bus-line">45</div>
+    </div>
+    <div class="time-display col-xs-3 col-xs-offset-1">0:00</div>
+    <div class="time-display col-xs-3">0:00</div>
+    <div class="time-display col-xs-3">0:00</div>
+</div>
 
 <hr />
 

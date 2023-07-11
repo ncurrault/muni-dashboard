@@ -36,10 +36,20 @@
             font-weight: bold;
             padding: 0.25em;
             margin-right: 0.25em;
-            font-size: 2.5em;
+            font-size: 1.5em;
             border-radius: 10px;
         }
-        
+        @media (min-width: 576px) {
+            .bus-line {
+                font-size: 2.5em;
+            }
+        }
+        @media (max-width: 576px) {
+            .hide-xs {
+                display: none;
+            }
+        }
+
         .time-display {
             font-size: 4em;
         }
@@ -63,31 +73,31 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-2 stop-icon">
+    <div class="col-xs-3 col-sm-2 stop-icon">
         <img src="static/metro_logos/T.svg" />
     </div>
-    <div class="time-display col-xs-3 col-xs-offset-1">0:00</div>
-    <div class="time-display col-xs-3">0:00</div>
-    <div class="time-display col-xs-3">0:00</div>
+    <div class="time-display col-xs-4 col-sm-3 col-sm-offset-1">0:00</div>
+    <div class="time-display col-xs-4 col-sm-3">0:00</div>
+    <div class="time-display hide-xs col-sm-3">0:00</div>
 </div>
 
 <div class="row">
-    <div class="col-xs-2 stop-icon">
+    <div class="col-xs-3 col-sm-2 stop-icon">
         <img src="static/metro_logos/N.svg" />
     </div>
-    <div class="time-display col-xs-3 col-xs-offset-1">0:00</div>
-    <div class="time-display col-xs-3">0:00</div>
-    <div class="time-display col-xs-3">0:00</div>
+    <div class="time-display col-xs-4 col-sm-3 col-sm-offset-1">0:00</div>
+    <div class="time-display col-xs-4 col-sm-3">0:00</div>
+    <div class="time-display hide-xs  col-sm-3">0:00</div>
 </div>
 
 <div class="row">
-    <div class="col-xs-2 stop-icon">
+    <div class="col-xs-3 col-sm-2 stop-icon">
         <div class="bus-line">30</div>
         <div class="bus-line">45</div>
     </div>
-    <div class="time-display col-xs-3 col-xs-offset-1">0:00</div>
-    <div class="time-display col-xs-3">0:00</div>
-    <div class="time-display col-xs-3">0:00</div>
+    <div class="time-display col-xs-4 col-sm-3 col-sm-offset-1">0:00</div>
+    <div class="time-display col-xs-4 col-sm-3">0:00</div>
+    <div class="time-display hide-xs  col-sm-3">0:00</div>
 </div>
 
 <hr />

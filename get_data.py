@@ -3,6 +3,7 @@ from collections import defaultdict
 from pprint import pprint
 import datetime
 import requests
+import pytz
 
 USE_TEST_DATA = True
 TEST_DATA_FILE = "../muni-dashboard2/all_10-06am.json"
@@ -10,6 +11,8 @@ TEST_DATA_FILE = "../muni-dashboard2/all_10-06am.json"
 
 CONFIG_FILE = "config.json"
 SECRETS_FILE = "secrets.json"
+
+TIMESTAMP_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
 
 
 def get_config():
@@ -40,7 +43,7 @@ def get_muni_data():
 
 def is_departure_feasible(departure_timestamp: str, walking_time_secs: float):
     departure_datetime = datetime.datetime.strptime(
-        departure_timestamp, "%Y-%m-%dT%H:%M:%SZ"
+        departure_timestamp, TIMESTAMP_FORMAT
     )
     now = (
         datetime.datetime(2023, 6, 27, 17, 4, 17)
@@ -111,7 +114,13 @@ def construct_response_data(config, muni_data):
 def get_result():
     config = get_config()
     muni_data = get_muni_data()
-    result = {"config": config, **construct_response_data(config, muni_data)}
+    result = {
+        "config": config,
+        "lastUpdated": datetime.datetime.now(datetime.timezone.utc).strftime(
+            TIMESTAMP_FORMAT
+        ),
+        **construct_response_data(config, muni_data),
+    }
     return result
 
 

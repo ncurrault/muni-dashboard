@@ -4,11 +4,9 @@
 <head>
     <title>Muni Dashboard</title>
 
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"   integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="   crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
     <style>
         .title {
@@ -20,19 +18,17 @@
             height: 1.5em;
         }
 
+        .stop-icon {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
         .bus-lines-display {
             display: flex;
             flex-direction: row;
             align-items: center;
-            margin-bottom: 1em;
-            min-height: 20vh;
-        }
-        .stop-icon {
-            margin-bottom: 1em;
-        }
-        .stop-icon img {
-            width: 100%;
-            height: 100%;
+            justify-content: center;
         }
         .bus-line {
             background-color: rgb(211,107,124);
@@ -40,73 +36,71 @@
             font-weight: bold;
             padding: 0.25em;
             margin-right: 0.25em;
-            font-size: 1.5em;
+            font-size: 1.4em;
             border-radius: 10px;
-        }
-        @media (min-width: 576px) {
-            .bus-line {
-                font-size: 2.5em;
-            }
-        }
-        @media (max-width: 576px) {
-            .hide-xs {
-                display: none;
-            }
         }
 
         .time-display {
-            font-size: 4em;
+            font-size: 2em;
+        }
+        @media (min-width: 576px) {
+            .time-display {
+                font-size: 4em;
+            }
+            .bus-line {
+                font-size: 2.5em;
+            }
         }
     </style>
 </head>
 <body class="container">
 
-<div class="jumbotron">
-<div class="row">
-    <div class="col-xs-12 title">
-        <h1><img src="static/muni.svg"></h1>
-        <h1>Dashboard</h1>
-    </div>
-    <div class="col-xs-12">
-        <p>Last updated: TODO</p>
-    </div>
-    <div class="col-xs-12">
-        <p>If departing now: 4th & King St, 0:00</p>
+<div class="p-3 bg-light rounded-3">
+    <div class="container-fluid py-3">
+        <div class="title">
+            <h1><img src="static/muni.svg"></h1>
+            <h1>Dashboard</h1>
+        </div>
+        <div class="row">
+            <p>Last updated: TODO</p>
+            <p>If departing now: 4th & King St, 0:00</p>
+        </div>
     </div>
 </div>
-</div>
 
-<div class="row">
-    <div class="col-xs-3 col-sm-2 stop-icon">
-        <img src="static/metro_logos/T.svg" />
+<div class="row align-items-center mb-3">
+    <div class="col-3 stop-icon">
+        <img src="static/metro_logos/T.svg" class="img-fluid" />
     </div>
-    <div class="time-display col-xs-4 col-sm-3 col-sm-offset-1">0:00</div>
-    <div class="time-display col-xs-4 col-sm-3">0:00</div>
-    <div class="time-display hide-xs col-sm-3">0:00</div>
+    <div class="col-3"><span class="time-display">0:00</span></div>
+    <div class="col-3"><span class="time-display">0:00</span></div>
+    <div class="col-3"><span class="time-display">0:00</span></div>
 </div>
 
-<div class="row">
-    <div class="col-xs-3 col-sm-2 stop-icon">
-        <img src="static/metro_logos/N.svg" />
+<div class="row align-items-center mb-3">
+    <div class="col-3 stop-icon">
+        <img src="static/metro_logos/N.svg" class="img-fluid" />
     </div>
-    <div class="time-display col-xs-4 col-sm-3 col-sm-offset-1">0:00</div>
-    <div class="time-display col-xs-4 col-sm-3">0:00</div>
-    <div class="time-display hide-xs  col-sm-3">0:00</div>
+    <div class="col-3"><span class="time-display">0:00</span></div>
+    <div class="col-3"><span class="time-display">0:00</span></div>
+    <div class="col-3"><span class="time-display">0:00</span></div>
 </div>
 
-<div class="row">
-    <div class="col-xs-3 col-sm-2 bus-lines-display">
-        <div class="bus-line">30</div>
-        <div class="bus-line">45</div>
+<div class="row align-items-center mb-3">
+    <div class="col-3">
+        <div class="bus-lines-display">
+            <div class="bus-line">30</div>
+            <div class="bus-line">45</div>
+        </div>
     </div>
-    <div class="time-display col-xs-4 col-sm-3 col-sm-offset-1">0:00</div>
-    <div class="time-display col-xs-4 col-sm-3">0:00</div>
-    <div class="time-display hide-xs  col-sm-3">0:00</div>
+    <div class="col-3"><span class="time-display">0:00</span></div>
+    <div class="col-3"><span class="time-display">0:00</span></div>
+    <div class="col-3"><span class="time-display">0:00</span></div>
 </div>
 
-<hr />
-
-<p>&copy; 2023 Nicholas Currault</p>
+<footer class="pt-2 text-muted border-top">
+    <p>&copy; 2023 Nicholas Currault</p>
+</footer>
 
 </body>
 

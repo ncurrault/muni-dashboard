@@ -8,15 +8,18 @@
 	"stopInfo": {
 		"13114": {
 			"stopName": "3rd St & Brannan St",
-			"walkingTime": 124.06
+			"walkingTime": 124.06,
+			"isMetro": false
 		},
 		"17879": {
 			"stopName": "4th St & Brannan St",
-			"walkingTime": 174.28
+			"walkingTime": 174.28,
+			"isMetro": true
 		},
 		"15237": {
 			"stopName": "King St & 2nd St",
-			"walkingTime": 262.67
+			"walkingTime": 262.67,
+			"isMetro": true
 		}
 	},
 	"walkOptimizerBuffer": 90

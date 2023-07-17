@@ -3,9 +3,8 @@ from collections import defaultdict
 from pprint import pprint
 import datetime
 import requests
-import pytz
 
-USE_TEST_DATA = True
+USE_TEST_DATA = False
 TEST_DATA_FILE = "../muni-dashboard2/all_10-06am.json"
 
 
@@ -126,7 +125,10 @@ def get_result():
 
 # run this file directly to print the result
 def main():
-    pprint(get_result())
+    res = get_result()
+    pprint(res)
+    with open("api_out.json", "w") as f:
+        json.dump(res, f)
 
 
 if __name__ == "__main__":

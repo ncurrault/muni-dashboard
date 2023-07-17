@@ -42,11 +42,11 @@
             border-radius: 10px;
         }
 
-        .time-display {
+        .time-disp {
             font-size: 2em;
         }
         @media (min-width: 576px) {
-            .time-display {
+            .time-disp {
                 font-size: 4em;
             }
             .bus-line {
@@ -57,23 +57,59 @@
 
     <script>
         let data = null
+        const NOW = undefined // "2023-07-17T01:15:43Z"
+
+        const displayDuration = (momentDuration) => {
+            const m = momentDuration.minutes()
+            const s = `${momentDuration.seconds()}`.padStart(2, "0")
+            return `${m}:${s}`
+        }
+
+        const getNextFeasibleDeparture = (departure) => {
+            const [stopId, timestamp] = departure
+
+            const name = data.config.stopInfo[stopId].stopName
+            const timeToArrival = moment.duration(moment(timestamp).diff(moment(NOW)))
+
+            return `${name}, ${displayDuration(timeToArrival)}`
+        }
+
+        const tick = () => {
+            if (!data) {
+                $(".time-display").html(null)
+                $("#departingNow").html("Loading...")
+                return
+            }
+            
+            // update "departing now" recommendation
+            let nextDeparture = getNextFeasibleDeparture(data.nextFeasibleDepartures[0])
+            if (!data.config.stopInfo[data.nextFeasibleDepartures[0][0]].isMetro) {
+                nextDeparture += "; "
+                nextDeparture += getNextFeasibleDeparture(data.nextFeasibleDepartures[1])
+            }
+            $("#departingNow").html(nextDeparture)
+        }
+
         const updateData = () => {
             $.ajax({
                 url: "/api_out.json",
                 success: (dataResponse) => {
                     const lastUpdate = moment(dataResponse.lastUpdated)
                     const lastUpdateStr = `${lastUpdate.format("h:mm:ss A")} (${lastUpdate.fromNow()})`
-                    $("#lastUpdateTarget").html(lastUpdateStr);
+                    $("#lastUpdateTarget").html(lastUpdateStr)
 
                     data = dataResponse;
-                    $("#lastUpdateFailedBadge").addClass("d-none");
+                    $("#lastUpdateFailedBadge").addClass("d-none")
+                    tick()
                 },
                 error: (jqXHR, textStatus, errorThrown) => {
-                    $("#lastUpdateFailedBadge").removeClass("d-none");
+                    $("#lastUpdateFailedBadge").removeClass("d-none")
+                    tick()
                 }
             });
         }
-        $(updateData);
+
+        $(updateData)
     </script>
 </head>
 <body class="container">
@@ -90,39 +126,39 @@
                 <span id="lastUpdateTarget">Never</span>
                 <span id="lastUpdateFailedBadge" class="badge bg-warning d-none">Last update failed</span>
             </p>
-            <p>If departing now: 4th & King St, 0:00</p>
+            <p>If departing now: <span id="departingNow">Loading...</span></p>
         </div>
     </div>
 </div>
 
-<div class="row align-items-center mb-3">
+<div class="row align-items-center mb-3" id="row-T">
     <div class="col-3 stop-icon">
         <img src="static/metro_logos/T.svg" class="img-fluid" />
     </div>
-    <div class="col-3"><span class="time-display">0:00</span></div>
-    <div class="col-3"><span class="time-display">0:00</span></div>
-    <div class="col-3"><span class="time-display">0:00</span></div>
+    <div class="col-3"><span class="time-disp time-disp-1">0:01</span></div>
+    <div class="col-3"><span class="time-disp time-disp-2">0:02</span></div>
+    <div class="col-3"><span class="time-disp time-disp-3">0:03</span></div>
 </div>
 
-<div class="row align-items-center mb-3">
+<div class="row align-items-center mb-3 row-N">
     <div class="col-3 stop-icon">
         <img src="static/metro_logos/N.svg" class="img-fluid" />
     </div>
-    <div class="col-3"><span class="time-display">0:00</span></div>
-    <div class="col-3"><span class="time-display">0:00</span></div>
-    <div class="col-3"><span class="time-display">0:00</span></div>
+    <div class="col-3"><span class="time-disp time-disp-1">0:00</span></div>
+    <div class="col-3"><span class="time-disp time-disp-2">0:00</span></div>
+    <div class="col-3"><span class="time-disp time-disp-3">0:00</span></div>
 </div>
 
-<div class="row align-items-center mb-3">
+<div class="row align-items-center mb-3 row-30-45">
     <div class="col-3">
         <div class="bus-lines-display">
             <div class="bus-line">30</div>
             <div class="bus-line">45</div>
         </div>
     </div>
-    <div class="col-3"><span class="time-display">0:00</span></div>
-    <div class="col-3"><span class="time-display">0:00</span></div>
-    <div class="col-3"><span class="time-display">0:00</span></div>
+    <div class="col-3"><span class="time-disp time-disp-1">0:00</span></div>
+    <div class="col-3"><span class="time-disp time-disp-2">0:00</span></div>
+    <div class="col-3"><span class="time-disp time-disp-3">0:00</span></div>
 </div>
 
 <footer class="pt-2 text-muted border-top">

@@ -58,6 +58,7 @@
     <script>
         let data = null
         const NOW = undefined // "2023-07-17T01:15:43Z"
+        // NOTE undefined for deploy, hard-coded time for off hours testing
 
         const displayDuration = (momentDuration) => {
             const m = momentDuration.minutes()
@@ -81,6 +82,12 @@
                 return
             }
             
+            // update "last updated" line
+            const lastUpdate = moment(data.lastUpdated)
+            const lastUpdateStr = `${lastUpdate.format("h:mm:ss A")} (${lastUpdate.fromNow()})`
+            $("#lastUpdateTarget").html(lastUpdateStr)
+
+
             // update "departing now" recommendation
             let nextDeparture = getNextFeasibleDeparture(data.nextFeasibleDepartures[0])
             if (!data.config.stopInfo[data.nextFeasibleDepartures[0][0]].isMetro) {
@@ -88,16 +95,23 @@
                 nextDeparture += getNextFeasibleDeparture(data.nextFeasibleDepartures[1])
             }
             $("#departingNow").html(nextDeparture)
+
+            // update departure board
+            Object.entries(data.upcomingDepartures).forEach(([stopId, departures]) => {
+                const futureDepartures = departures.map((d) => moment(d)).filter((departure) => 
+                    departure.isSameOrAfter(moment(NOW))
+                ).map((departureTime) => displayDuration(moment.duration(departureTime.diff(moment(NOW)))));
+
+                [1, 2, 3].forEach((departureNum) => {
+                    $(`#stop-${stopId}-row .time-disp-${departureNum}`).html(futureDepartures[departureNum - 1] ?? null)
+                })
+            })
         }
 
         const updateData = () => {
             $.ajax({
                 url: "/api_out.json",
                 success: (dataResponse) => {
-                    const lastUpdate = moment(dataResponse.lastUpdated)
-                    const lastUpdateStr = `${lastUpdate.format("h:mm:ss A")} (${lastUpdate.fromNow()})`
-                    $("#lastUpdateTarget").html(lastUpdateStr)
-
                     data = dataResponse;
                     $("#lastUpdateFailedBadge").addClass("d-none")
                     tick()
@@ -131,7 +145,7 @@
     </div>
 </div>
 
-<div class="row align-items-center mb-3" id="row-T">
+<div class="row align-items-center mb-3" id="stop-17879-row">
     <div class="col-3 stop-icon">
         <img src="static/metro_logos/T.svg" class="img-fluid" />
     </div>
@@ -140,7 +154,7 @@
     <div class="col-3"><span class="time-disp time-disp-3">0:03</span></div>
 </div>
 
-<div class="row align-items-center mb-3 row-N">
+<div class="row align-items-center mb-3" id="stop-15237-row">
     <div class="col-3 stop-icon">
         <img src="static/metro_logos/N.svg" class="img-fluid" />
     </div>
@@ -149,7 +163,7 @@
     <div class="col-3"><span class="time-disp time-disp-3">0:00</span></div>
 </div>
 
-<div class="row align-items-center mb-3 row-30-45">
+<div class="row align-items-center mb-3" id="stop-13114-row">
     <div class="col-3">
         <div class="bus-lines-display">
             <div class="bus-line">30</div>

@@ -3,14 +3,12 @@ from collections import defaultdict
 from pprint import pprint
 import datetime
 import requests
+import os
 
 USE_TEST_DATA = False
 TEST_DATA_FILE = "../muni-dashboard2/all_10-06am.json"
 
-
 CONFIG_FILE = "config.json"
-SECRETS_FILE = "secrets.json"
-
 TIMESTAMP_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
 
 
@@ -24,8 +22,7 @@ def get_muni_data():
         with open(TEST_DATA_FILE, "r", encoding="utf-8-sig") as f:
             data = json.load(f)
     else:
-        with open("secrets.json", "r") as f:
-            API_KEY = json.load(f)["apiKey"]
+        API_KEY = os.getenv("API_KEY")
         response = requests.get(
             f"https://api.511.org/transit/StopMonitoring?api_key={API_KEY}&agency=SF&format=JSON"
         )

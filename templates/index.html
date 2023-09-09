@@ -110,7 +110,7 @@
 
         const updateData = () => {
             $.ajax({
-                url: "/api_out.json",
+                url: "/get_data",
                 success: (dataResponse) => {
                     data = dataResponse;
                     $("#lastUpdateFailedBadge").addClass("d-none")
